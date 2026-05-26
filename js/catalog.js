@@ -49,6 +49,9 @@ const CatalogUI = (() => {
     'bags-shine':    { label: 'Shine',      data: 'bags_shine',    parent: 'Bags',              gender: 'all',    type: 'bags' },
   };
 
+  const fallbackBagImg = () => CATALOG._assetUrl('web utilities/bags.jpg');
+  const fallbackLibraryImg = () => CATALOG._assetUrl('web utilities/her-library.png');
+
   // Fallback handler: all product images are .jpg, so go straight to the placeholder.
   // Prevents infinite error loops if the fallback asset itself is missing.
   function handleImgFallback(imgElement, fallbackSource) {
@@ -172,12 +175,12 @@ const CatalogUI = (() => {
         <img class="catalog-card-img-flat"
              src="${flatImg}"
              alt="${product.name}"
-             onerror="CatalogUI.handleImgFallback(this, 'assets/bags.jpg')">
+             onerror="CatalogUI.handleImgFallback(this, CatalogUI.fallbackBagImg())">
         <img class="catalog-card-img-model"
              src="${modelImg}"
              alt="${product.name} on model"
              loading="lazy"
-             onerror="CatalogUI.handleImgFallback(this, 'assets/her-library.png')">
+             onerror="CatalogUI.handleImgFallback(this, CatalogUI.fallbackLibraryImg())">
         <span class="catalog-card-swap-label">On Model</span>
         ${product.badge ? `<span class="catalog-card-badge">${product.badge}</span>` : ''}
         <div class="catalog-card-actions">
@@ -219,7 +222,10 @@ const CatalogUI = (() => {
     const modelImg  = CATALOG.imgModel(id);
 
     // Thumbnails: main + model + 2 extras (use existing assets as fallbacks)
-    const extraImgs = ['assets/bags.jpg', 'assets/shoes.jpg'];
+    const extraImgs = [
+      CATALOG._assetUrl('web utilities/bags.jpg'),
+      CATALOG._assetUrl('web utilities/shoes.jpg')
+    ];
     const allImgs = [flatImg, modelImg, ...extraImgs];
 
     // Size chart rows
@@ -248,13 +254,11 @@ const CatalogUI = (() => {
       <div class="product-modal-gallery">
         <button class="product-modal-close" onclick="CatalogUI.closeProduct()">✕</button>
         <img class="product-modal-main-img" id="modalMainImg" src="${allImgs[0]}"
-             alt="${product.name}" onerror="CatalogUI.handleImgFallback(this, 'assets/bags.jpg')">
+             alt="${product.name}" onerror="CatalogUI.handleImgFallback(this, CatalogUI.fallbackBagImg())">
         <div class="product-modal-thumbnails">
           ${allImgs.map((img, i) => {
             // Static default UI assets shouldn't trigger dynamic extension conversion matching loops
-            const errorAttr = img.startsWith('assets/products/') 
-              ? `onerror="CatalogUI.handleImgFallback(this, 'assets/bags.jpg')"` 
-              : `onerror="this.src='assets/bags.jpg'"`;
+            const errorAttr = `onerror="CatalogUI.handleImgFallback(this, CatalogUI.fallbackBagImg())"`;
             return `
               <img class="product-modal-thumb ${i === 0 ? 'active' : ''}"
                    src="${img}"
@@ -445,7 +449,18 @@ const CatalogUI = (() => {
     renderGrid();
   }
 
-  return { init, setSection, openProduct, closeProduct, switchThumb, selectSize, toggleSizeChart, handleImgFallback };
+  return {
+    init,
+    setSection,
+    openProduct,
+    closeProduct,
+    switchThumb,
+    selectSize,
+    toggleSizeChart,
+    handleImgFallback,
+    fallbackBagImg,
+    fallbackLibraryImg
+  };
 })();
 
 document.addEventListener('DOMContentLoaded', CatalogUI.init);

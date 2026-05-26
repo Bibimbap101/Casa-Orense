@@ -261,6 +261,89 @@ CATALOG.all = Object.values(CATALOG)
 CATALOG.findById = (id) => CATALOG.all.find(p => p.id === id);
 
 // ── IMAGE PATH HELPERS ─────────────────────────────────────
+// Resolve from this script file so catalog.html can live inside /pages.
+const _ASSET_ROOT = new URL('../assets/', document.currentScript.src).href;
+
+const _IMG_STEMS = {
+  'm-sh-3': 'BrushesEmbroidedShirt',
+  'm-sh-6': 'FloralEmbroidedShirt',
+  'm-sh-8': 'LeafEmbroidedShirt',
+  'm-sh-9': 'NavyBlueJacquardShirt',
+  'm-sh-12': 'WhiteButtonUpLinenShirt',
+  'm-cd-2': 'PurlKnitCardigan',
+  'm-hd-1': 'CableKnittedHoodie',
+  'm-jk-3': 'EmbroidedParadeJacket',
+  'm-jk-6': 'FloralWashDenimJacket',
+  'm-jk-8': 'JapaneseCottonDenimJacket',
+  'm-tr-2': 'RelaxedLinenTrousers',
+  'w-sh-4': 'FloralCutWorkShit',
+  'w-sh-5': 'NavyBlueLinenShirt',
+  'w-sl-1': 'GuipureLaceTop',
+  'w-jn-3': 'RippedLowRiseJeans',
+  'w-sk-2': 'FloralSkirt',
+  'sh-m-1': 'BlackDressPennyLoafers',
+  'sh-m-2': 'CowLeatherPennyLoafers',
+  'sh-m-4': 'StrappedSandals',
+  'sh-m-6': 'TasseledLoafers',
+  'sh-w-1': 'BlackBallerinaShoes',
+  'sh-w-2': 'BurgundyBallerinaShoes',
+  'sh-w-3': 'LeatherFlats',
+  'bg-im-1': 'AmanadeImpressMedium',
+  'bg-im-2': 'BlackandChestnutImpressMedium',
+  'bg-im-3': 'BlackImpressLarge',
+  'bg-im-4': 'CamelImpressLarge',
+  'bg-im-5': 'MacassarImpressMedium',
+  'bg-im-6': 'TwilightImpressMedium',
+  'bg-im-7': 'GraphiteImpressMedium',
+  'bg-im-8': 'BlackImpressMedium',
+  'bg-im-9': 'GraphiteImpressLarge',
+  'bg-kl-1': 'BlackFullSizeKlasiko',
+  'bg-kl-2': 'BlackMiniKlasiko',
+  'bg-kl-3': 'BordeauxFullSizeKlasiko',
+  'bg-kl-4': 'CamelFullSizeKlasiko',
+  'bg-kl-5': 'CognacFullSizeKlasiko',
+  'bg-kl-6': 'GreyBlueMiniKlasiko',
+  'bg-kl-7': 'SandMiniKlasiko',
+  'bg-kl-8': 'SilverMiniKlasiko',
+  'bg-sh-1': 'BlackShineBag',
+  'bg-sh-2': 'LightBlueShineBag',
+};
+
+const _IMG_FILE_OVERRIDES = {
+  'm-ts-2': {
+    flat: 'men/tops/tshirts/LoveisGamblingT-Shirt_ModelBack.jpg',
+    model: 'men/tops/tshirts/LoveisGamblingT-Shirt_ModelFront.jpg',
+  },
+  'm-ts-3': {
+    flat: 'men/tops/tshirts/ProbinsyaT-Shirt_ModelBack.jpg',
+    model: 'men/tops/tshirts/ProbinsyaT-Shirt_ModelFront.jpg',
+  },
+  'm-ts-4': {
+    flat: 'men/tops/tshirts/TagaBundokT-Shirt_ModelBack.jpg',
+    model: 'men/tops/tshirts/TagaBundokT-Shirt_ModelFront.jpg',
+  },
+  'm-jn-4': {
+    flat: 'men/bottoms/jeans/Jean-1-flat.svg',
+    model: 'men/bottoms/jeans/Jean-1-model.svg',
+  },
+  'm-st-4': {
+    flat: 'men/bottoms/shorts/Short-1-flat.svg',
+    model: 'men/bottoms/shorts/Short-1-model.svg',
+  },
+  'w-ts-1': {
+    flat: 'women/tops/tshirts/HersT-Shirt_ModelBack.jpg',
+    model: 'women/tops/tshirts/HersT-Shirt_ModelFront.jpg',
+  },
+  'sh-m-6': {
+    flat: 'shoes/mens/TasseledLoafers_ShoesOnly.jpg',
+    model: 'shoes/mens/TasseledLoafers_ShoesOnly.jpg',
+  },
+  'bg-sh-2': {
+    flat: 'bags/shine/LightBlueShineBag_BagOnlty.jpg',
+    model: 'bags/shine/LightBlueShineBag_WithModel.jpg',
+  },
+};
+
 // Maps the category prefix portion of a product ID to its folder path.
 // ID format: {prefix}-{number}  e.g. "m-sh-1", "sh-m-2", "bg-im-3"
 // The number is always the LAST dash-segment; everything before it is the prefix.
@@ -304,18 +387,45 @@ CATALOG._imgParts = (id) => {
   return { folder, num };
 };
 
-// Flat / clothing-only image  →  {num}_ClothingOnly.jpg
-CATALOG.imgFlat = (id) => {
-  const p = CATALOG._imgParts(id);
-  if (!p) return 'assets/bags.jpg';
-  return `assets/products/${p.folder}/${p.num}_ClothingOnly.jpg`;
+CATALOG._assetUrl = (path) => new URL(path, _ASSET_ROOT).href;
+
+CATALOG._imgStem = (id) => {
+  if (_IMG_STEMS[id]) return _IMG_STEMS[id];
+  const product = CATALOG.findById(id);
+  return product ? product.name.replace(/[^a-z0-9]/gi, '') : null;
 };
 
-// On-model image  →  {num}_Model.jpg  (same folder, different suffix)
-CATALOG.imgModel = (id) => {
+// Flat / clothing-only image.
+CATALOG.imgFlat = (id) => {
+  if (_IMG_FILE_OVERRIDES[id]?.flat) {
+    return CATALOG._assetUrl(`products/${_IMG_FILE_OVERRIDES[id].flat}`);
+  }
+
   const p = CATALOG._imgParts(id);
-  if (!p) return 'assets/her-library.png';
-  return `assets/products/${p.folder}/${p.num}_Model.jpg`;
+  const stem = CATALOG._imgStem(id);
+  if (!p || !stem) return CATALOG._assetUrl('web utilities/bags.jpg');
+
+  const suffix = id.startsWith('bg-')
+    ? 'BagOnly'
+    : id.startsWith('sh-')
+      ? 'ShoesOnly'
+      : 'ClothingOnly';
+
+  return CATALOG._assetUrl(`products/${p.folder}/${stem}_${suffix}.jpg`);
+};
+
+// On-model image.
+CATALOG.imgModel = (id) => {
+  if (_IMG_FILE_OVERRIDES[id]?.model) {
+    return CATALOG._assetUrl(`products/${_IMG_FILE_OVERRIDES[id].model}`);
+  }
+
+  const p = CATALOG._imgParts(id);
+  const stem = CATALOG._imgStem(id);
+  if (!p || !stem) return CATALOG._assetUrl('web utilities/her-library.png');
+
+  const suffix = id.startsWith('bg-') ? 'WithModel' : 'ModelFront';
+  return CATALOG._assetUrl(`products/${p.folder}/${stem}_${suffix}.jpg`);
 };
 
 // Get correct size set for a product
