@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalog — Casa Orense</title>
+  <meta name="description" content="Shop the full Casa Orense collection — Clothes, Shoes, and Bags. Philippine luxury fashion by appointment.">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/catalog.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✦</span>
+    <span class="toast-text"></span>
+  </div>
+
+  <!-- BASKET OVERLAY -->
+  <div class="overlay-side" id="basketOverlay"></div>
+
+  <!-- BASKET SIDEBAR -->
+  <aside class="basket-sidebar" id="basketSidebar">
+    <div class="basket-sidebar-header">
+      <div>
+        <span class="section-label" style="margin-bottom:8px">Your Reservation</span>
+        <h2 class="basket-sidebar-title">Basket</h2>
+      </div>
+      <button class="modal-close" id="basketClose">✕</button>
+    </div>
+    <div class="basket-items-list" id="basketItemsList"></div>
+    <div class="basket-empty" id="basketEmpty" style="display:none">
+      <div class="basket-empty-icon">◻</div>
+      <div class="basket-empty-text">No pieces reserved yet</div>
+    </div>
+    <div class="basket-footer" id="basketFooter" style="display:none">
+      <div class="basket-store-select">
+        <label class="form-label">Select Store for Pickup</label>
+        <select class="form-select" id="basketStoreSelect">
+          <option value="">— Choose a store —</option>
+          <option value="rockwell">Rockwell, Makati</option>
+          <option value="greenbelt">Greenbelt, Makati</option>
+          <option value="bgc">BGC, Taguig</option>
+        </select>
+      </div>
+      <button class="basket-reserve-btn" id="basketReserveBtn">Confirm Reservation</button>
+    </div>
+  </aside>
+
+  <!-- NAV -->
+  <nav id="mainNav" class="scrolled">
+    <a href="../index.html" class="nav-logo">Casa <span>Orense</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#collectionsSection">Collections</a></li>
+      <li><a href="catalog.html" style="color:var(--gold)">Boutique</a></li>
+      <li><a href="../index.html#locationsSection">Our Stores</a></li>
+      <li><a href="#" data-open-appt>Appointments</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="navAccountBtn" style="display:none">Account</button>
+      <button class="nav-icon-btn" id="navLoginBtn">Sign In</button>
+      <button class="nav-icon-btn" id="basketToggle" style="position:relative">
+        Basket
+        <span class="basket-count" id="basketCount">0</span>
+      </button>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════ CATALOG PAGE -->
+  <div class="catalog-page">
+
+    <!-- CATALOG HERO -->
+    <div class="catalog-hero">
+      <div class="catalog-hero-bg"></div>
+      <div class="catalog-hero-line"></div>
+      <div class="catalog-hero-content">
+        <div class="catalog-breadcrumb">
+          <a href="../index.html">Home</a>
+          <span class="sep">◈</span>
+          <span class="current">Boutique Catalog</span>
+        </div>
+        <h1 class="catalog-hero-title" id="catalogHeroTitle">The <em>Boutique</em></h1>
+        <span class="catalog-hero-count" id="catalogHeroCount">Loading…</span>
+      </div>
+    </div>
+
+    <!-- CATALOG BODY -->
+    <div class="catalog-body">
+
+      <!-- ═══════════ SIDEBAR ═══════════ -->
+      <aside class="catalog-sidebar">
+
+        <!-- GENDER TABS -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Gender</div>
+          <div class="gender-tabs">
+            <button class="gender-tab active" data-gender="all">All</button>
+            <button class="gender-tab" data-gender="mens">Men</button>
+            <button class="gender-tab" data-gender="womens">Women</button>
+          </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="sidebar-section">
+          <div class="sidebar-title" data-toggle>
+            Categories
+            <span class="sidebar-toggle-icon">▾</span>
+          </div>
+          <div class="sidebar-items">
+
+            <!-- ALL -->
+            <button class="sidebar-cat active" onclick="CatalogUI.setSection('all',this)">
+              All Pieces <span class="cat-count">132</span>
+            </button>
+
+            <!-- ── CLOTHES ── -->
+            <button class="sidebar-cat-parent">
+              <span class="parent-icon" style="color:var(--gold);transition:transform 0.3s">▾</span>
+              Clothes
+            </button>
+            <div class="sidebar-cat-children">
+
+              <!-- MEN -->
+              <button class="sidebar-cat-parent" style="font-size:0.52rem;padding:6px 8px;color:var(--warm-grey)">
+                <span class="parent-icon" style="transition:transform 0.3s">▾</span>
+                Men
+              </button>
+              <div class="sidebar-cat-children">
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Tops</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-shirts',this)">Shirts <span class="cat-count">13</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-tshirts',this)">T-Shirts <span class="cat-count">4</span></button>
+                </div>
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Outerwear</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-cardigans',this)">Cardigans <span class="cat-count">2</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-hoodies',this)">Hoodies <span class="cat-count">2</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-jackets',this)">Jackets <span class="cat-count">8</span></button>
+                </div>
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Bottoms</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-cargos',this)">Cargos <span class="cat-count">3</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-jeans',this)">Jeans <span class="cat-count">4</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-shorts',this)">Shorts <span class="cat-count">4</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('men-trousers',this)">Trousers <span class="cat-count">3</span></button>
+                </div>
+              </div>
+
+              <!-- WOMEN -->
+              <button class="sidebar-cat-parent" style="font-size:0.52rem;padding:6px 8px;color:var(--warm-grey)">
+                <span class="parent-icon" style="transition:transform 0.3s">▾</span>
+                Women
+              </button>
+              <div class="sidebar-cat-children">
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Tops</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-blouses',this)">Blouses <span class="cat-count">2</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-shirts',this)">Shirts <span class="cat-count">8</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-sleeveless',this)">Sleeveless <span class="cat-count">3</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-tshirts',this)">T-Shirts <span class="cat-count">4</span></button>
+                </div>
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Outerwear</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-cardigans',this)">Cardigans <span class="cat-count">5</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-jackets',this)">Jackets <span class="cat-count">5</span></button>
+                </div>
+                <button class="sidebar-cat-parent" style="font-size:0.5rem;padding:4px 8px;color:var(--ash)">Bottoms</button>
+                <div class="sidebar-cat-children">
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-jeans',this)">Jeans <span class="cat-count">4</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-shorts',this)">Shorts <span class="cat-count">7</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-skirts',this)">Skirts <span class="cat-count">5</span></button>
+                  <button class="sidebar-cat" onclick="CatalogUI.setSection('women-trousers',this)">Trousers <span class="cat-count">6</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── SHOES ── -->
+            <button class="sidebar-cat-parent">
+              <span class="parent-icon" style="color:var(--gold);transition:transform 0.3s">▾</span>
+              Shoes
+            </button>
+            <div class="sidebar-cat-children">
+              <button class="sidebar-cat" onclick="CatalogUI.setSection('shoes-mens',this)">Men's Shoes <span class="cat-count">6</span></button>
+              <button class="sidebar-cat" onclick="CatalogUI.setSection('shoes-womens',this)">Women's Shoes <span class="cat-count">3</span></button>
+            </div>
+
+            <!-- ── BAGS ── -->
+            <button class="sidebar-cat-parent">
+              <span class="parent-icon" style="color:var(--gold);transition:transform 0.3s">▾</span>
+              Bags
+            </button>
+            <div class="sidebar-cat-children">
+              <button class="sidebar-cat" onclick="CatalogUI.setSection('bags-impress',this)">Impress <span class="cat-count">9</span></button>
+              <button class="sidebar-cat" onclick="CatalogUI.setSection('bags-klasiko',this)">Klasiko <span class="cat-count">8</span></button>
+              <button class="sidebar-cat" onclick="CatalogUI.setSection('bags-shine',this)">Shine <span class="cat-count">2</span></button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PRICE FILTER -->
+        <div class="sidebar-section">
+          <div class="sidebar-title" data-toggle>
+            Max Price
+            <span class="sidebar-toggle-icon">▾</span>
+          </div>
+          <div class="price-range-wrap">
+            <div class="price-range-labels">
+              <span class="price-range-label">₱0</span>
+              <span class="price-range-label" id="priceLabel">₱380,000</span>
+            </div>
+            <input type="range" id="priceRange" min="0" max="380000" value="380000" step="5000">
+          </div>
+        </div>
+
+        <!-- APPOINTMENT NOTICE -->
+        <div style="padding:20px;background:rgba(184,151,90,0.04);border:1px solid rgba(184,151,90,0.12);margin-top:8px">
+          <p style="font-family:var(--font-body);font-size:0.55rem;font-weight:300;color:var(--warm-grey);line-height:1.9;letter-spacing:0.08em">Reserve pieces online for in-store pickup. Walk-in visits are not permitted.</p>
+          <button class="btn-ghost" style="margin-top:12px;font-size:0.5rem" data-open-appt>Book a Visit <span class="arrow">→</span></button>
+        </div>
+
+      </aside>
+
+      <!-- ═══════════ MAIN GRID ═══════════ -->
+      <main class="catalog-main">
+
+        <!-- TOOLBAR -->
+        <div class="catalog-toolbar">
+          <div class="catalog-search-wrap">
+            <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search pieces…">
+            <span class="catalog-search-icon">⊕</span>
+          </div>
+          <div class="catalog-toolbar-right">
+            <span class="catalog-results-count" id="catalogCount">— pieces</span>
+            <select class="catalog-sort" id="catalogSort">
+              <option value="default">Default</option>
+              <option value="asc">Price: Low → High</option>
+              <option value="desc">Price: High → Low</option>
+              <option value="alpha">Name A → Z</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" data-view="4col" title="4 columns">⊞</button>
+              <button class="view-btn" data-view="3col" title="3 columns">⊟</button>
+              <button class="view-btn" data-view="2col" title="2 columns">◫</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRODUCT GRID -->
+        <div class="catalog-grid" id="catalogGrid">
+          <!-- populated by catalog.js -->
+        </div>
+
+      </main>
+
+    </div><!-- end catalog-body -->
+  </div><!-- end catalog-page -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Casa Orense</div>
+        <span class="footer-brand-motto">Redefining Filipino Fashion</span>
+        <p class="footer-brand-desc">A Philippine-based high fashion house inspired by European elegance. Pieces constructed for those who command a room without raising their voice.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com" target="_blank" class="footer-social-link">IG</a>
+          <a href="https://facebook.com" target="_blank" class="footer-social-link">FB</a>
+          <a href="https://twitter.com" target="_blank" class="footer-social-link">𝕏</a>
+          <a href="https://pinterest.com" target="_blank" class="footer-social-link">PT</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Collections</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="CatalogUI.setSection('men-shirts',null)">Menswear</a></li>
+          <li><a href="#" onclick="CatalogUI.setSection('women-shirts',null)">Womenswear</a></li>
+          <li><a href="#" onclick="CatalogUI.setSection('shoes-mens',null)">Footwear</a></li>
+          <li><a href="#" onclick="CatalogUI.setSection('bags-impress',null)">Leather Goods</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Our Stores</div>
+        <ul class="footer-links">
+          <li><a href="../index.html#locationsSection">Rockwell, Makati</a></li>
+          <li><a href="../index.html#locationsSection">Greenbelt, Makati</a></li>
+          <li><a href="../index.html#locationsSection">BGC, Taguig</a></li>
+          <li><a href="#" data-open-appt>Book Appointment</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Services</div>
+        <ul class="footer-links">
+          <li><a href="#">Reservation Policy</a></li>
+          <li><a href="#">Alteration Services</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Care Instructions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Casa Orense. All Rights Reserved.</span>
+      <span class="footer-copy">By Appointment Only</span>
+    </div>
+  </footer>
+
+  <!-- ════════════ PRODUCT DETAIL MODAL ════════════ -->
+  <div class="product-modal-overlay" id="productModalOverlay">
+    <div class="product-modal" id="productModal">
+      <!-- populated by catalog.js -->
+    </div>
+  </div>
+
+  <!-- ════════════ AUTH MODAL (shared) ════════════ -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-eyebrow">Members Only</span>
+        <h2 class="modal-title">Welcome Back</h2>
+        <button class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="loginForm">
+          <button class="google-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.703-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Continue with Google
+          </button>
+          <div class="form-divider"><span class="form-divider-text">or</span></div>
+          <form id="loginFormEl" novalidate>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-input" id="loginPass" placeholder="••••••••">
+              <div class="form-error" id="loginError"></div>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px">Sign In</button>
+          </form>
+          <p class="form-switch-text" style="margin-top:20px">New to Casa Orense? <button id="showRegister">Create an account</button></p>
+        </div>
+        <div id="registerForm" style="display:none">
+          <p style="font-family:var(--font-body);font-size:0.65rem;color:var(--warm-grey);text-align:center;margin-bottom:16px">Please register via the main page for the full experience.</p>
+          <a href="../index.html" class="btn-primary" style="width:100%;justify-content:center">Go to Registration</a>
+          <p class="form-switch-text" style="margin-top:16px">Already a member? <button id="showLogin">Sign in</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPOINTMENT MODAL (same as main page) -->
+  <div class="modal-overlay" id="appointmentModal">
+    <div class="modal" style="max-width:580px">
+      <div class="modal-header">
+        <span class="modal-eyebrow">By Appointment Only</span>
+        <h2 class="modal-title">Book a Visit</h2>
+        <button class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="appt-progress">
+          <div class="appt-progress-bar done"></div>
+          <div class="appt-progress-bar"></div>
+          <div class="appt-progress-bar"></div>
+        </div>
+        <div class="appt-step active" data-step="1">
+          <div class="form-group">
+            <label class="form-label">Registrant Name</label>
+            <input type="text" class="form-input" id="apptName" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="margin-bottom:16px">Type of Visit</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <button class="appt-type-btn filter-btn" data-type="Shopping">Shopping</button>
+              <button class="appt-type-btn filter-btn" data-type="Store Pickup">Store Pickup</button>
+              <button class="appt-type-btn filter-btn" data-type="Altering">Altering</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preferred Store</label>
+              <select class="form-select" id="apptStore">
+                <option value="">— Select —</option>
+                <option value="rockwell">Rockwell, Makati</option>
+                <option value="greenbelt">Greenbelt, Makati</option>
+                <option value="bgc">BGC, Taguig</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">No. of Visitors</label>
+              <select class="form-select" id="apptNumVisitors">
+                <option value="1">1</option><option value="2">2</option>
+                <option value="3">3</option><option value="4">4 (Max)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-input" id="apptDate">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time</label>
+              <select class="form-select" id="apptTime">
+                <option value="">— Select —</option>
+                <option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+                <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="child-warning">
+            <span class="child-warning-icon">⚠</span>
+            <p class="child-warning-text"><strong style="color:#e89090">Children are strictly not permitted</strong> inside Casa Orense boutiques.</p>
+          </div>
+          <button class="btn-primary" style="width:100%;justify-content:center;margin-top:20px" id="apptNext1">Continue →</button>
+        </div>
+        <div class="appt-step" data-step="2">
+          <div class="visitors-list" id="visitorNamesWrap"></div>
+          <div style="display:flex;gap:12px;margin-top:28px">
+            <button class="btn-secondary" style="flex:1;justify-content:center" id="apptBack2">← Back</button>
+            <button class="btn-primary" style="flex:2;justify-content:center" id="apptNext2">Review →</button>
+          </div>
+        </div>
+        <div class="appt-step" data-step="3">
+          <p style="font-family:var(--font-body);font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px">Confirm Appointment</p>
+          <div id="apptConfirmDetails"></div>
+          <div style="display:flex;gap:12px;margin-top:28px">
+            <button class="btn-secondary" style="flex:1;justify-content:center" id="apptBack3">← Back</button>
+            <button class="btn-primary" style="flex:2;justify-content:center" id="apptSubmitBtn">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="../js/catalog-data.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/catalog.js"></script>
+
+  <script>
+    // Update nav link in main.js to work relative to pages/ folder
+    document.getElementById('navAccountBtn')?.addEventListener('click', () => {
+      window.location.href = '../index.html';
+    });
+  </script>
+
+</body>
+</html>

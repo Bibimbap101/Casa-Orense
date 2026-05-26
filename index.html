@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Orense — Redefining Filipino Fashion</title>
+  <meta name="description" content="Casa Orense is a Philippine-based high fashion brand. Sophistication, craftsmanship, and modern luxury.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+
+  <!-- LOADING -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-logo">CASA <span>ORENSE</span></div>
+    <div class="loading-bar-wrap"><div class="loading-bar" id="loadingBar"></div></div>
+  </div>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"><span class="toast-icon">✦</span><span class="toast-text"></span></div>
+
+  <!-- BASKET OVERLAY -->
+  <div class="overlay-side" id="basketOverlay"></div>
+
+  <!-- BASKET SIDEBAR -->
+  <aside class="basket-sidebar" id="basketSidebar">
+    <div class="basket-sidebar-header">
+      <div>
+        <span class="section-label" style="margin-bottom:8px">Your Reservation</span>
+        <h2 class="basket-sidebar-title">Basket</h2>
+      </div>
+      <button class="modal-close" id="basketClose">✕</button>
+    </div>
+    <div class="basket-items-list" id="basketItemsList"></div>
+    <div class="basket-empty" id="basketEmpty" style="display:none">
+      <div class="basket-empty-icon">◻</div>
+      <div class="basket-empty-text">No pieces reserved yet</div>
+      <a href="pages/catalog.html" class="btn-ghost" style="margin-top:8px">Explore Collection <span class="arrow">→</span></a>
+    </div>
+    <div class="basket-footer" id="basketFooter" style="display:none">
+      <div class="basket-store-select">
+        <label class="form-label">Select Pickup Store</label>
+        <select class="form-select" id="basketStoreSelect">
+          <option value="">— Choose a store —</option>
+          <option value="rockwell">Rockwell, Makati</option>
+          <option value="greenbelt">Greenbelt, Makati</option>
+          <option value="bgc">BGC, Taguig</option>
+        </select>
+      </div>
+      <button class="basket-reserve-btn" id="basketReserveBtn">Confirm Reservation</button>
+      <p style="font-family:var(--font-body);font-size:0.5rem;font-weight:300;color:var(--warm-grey);letter-spacing:0.12em;text-align:center;margin-top:12px">An in-store appointment is required to complete your reservation. Walk-ins are not permitted.</p>
+    </div>
+  </aside>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo">Casa <span>Orense</span></a>
+    <ul class="nav-links">
+      <li><a href="#collectionsSection" data-section="collectionsSection">Collections</a></li>
+      <li><a href="pages/catalog.html">Boutique</a></li>
+      <li><a href="#locationsSection" data-section="locationsSection">Our Stores</a></li>
+      <li><a href="#" data-open-appt>Appointments</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="navAccountBtn" style="display:none">Account</button>
+      <button class="nav-icon-btn" id="navLoginBtn">Sign In</button>
+      <button class="nav-icon-btn" id="basketToggle" style="position:relative">
+        Basket
+        <span class="basket-count" id="basketCount">0</span>
+      </button>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
+
+    <!-- HERO -->
+    <section class="hero" id="heroSection">
+      <div class="hero-video-container">
+       
+        <video class="hero-video"        autoplay muted loop playsinline><source src="assets\web utilities\hero4.mp4" type="video/mp4"></video>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-eyebrow">Autumn — Winter 2025 Collection</span>
+        <h1 class="hero-title">Redefining<br><em>Filipino</em><br>Fashion.</h1>
+        <p class="hero-subtitle">Philippine craftsmanship elevated to European sensibility. Pieces constructed for those who command a room without raising their voice.</p>
+        <div class="hero-cta">
+          <a href="pages/catalog.html" class="btn-primary">Explore Collection</a>
+          <a href="#" class="btn-secondary" data-open-appt>Book a Visit</a>
+        </div>
+      </div>
+      <div class="hero-indicators">
+        <div class="hero-indicator active"></div>
+        <div class="hero-indicator"></div>
+        <div class="hero-indicator"></div>
+        <div class="hero-indicator"></div>
+        <div class="hero-indicator"></div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-section">
+      <div class="marquee-track">
+        <span class="marquee-item">Casa Orense</span>
+        <span class="marquee-item">Redefining Filipino Fashion</span>
+        <span class="marquee-item">Rockwell · Greenbelt · BGC</span>
+        <span class="marquee-item">By Appointment Only</span>
+        <span class="marquee-item">AW 2025 Collection</span>
+        <span class="marquee-item">Philippine Luxury Atelier</span>
+        <span class="marquee-item">Casa Orense</span>
+        <span class="marquee-item">Redefining Filipino Fashion</span>
+        <span class="marquee-item">Rockwell · Greenbelt · BGC</span>
+        <span class="marquee-item">By Appointment Only</span>
+        <span class="marquee-item">AW 2025 Collection</span>
+        <span class="marquee-item">Philippine Luxury Atelier</span>
+      </div>
+    </div>
+
+    <!-- COLLECTIONS -->
+ 
+    <section class="collections-section" id="collectionsSection">
+      <div class="section-header" data-reveal>
+        <div>
+          <span class="section-label">AW 2025</span>
+          <h2 class="section-title">The <em>Collections</em></h2>
+        </div>
+        <a href="pages/catalog.html" class="btn-ghost">View All Pieces <span class="arrow">→</span></a>
+      </div>
+
+      <div class="collections-grid">
+        <!-- Outerwear → catalog.html?section=men-jackets -->
+        <a href="pages/catalog.html?section=outerwear" class="collection-card" data-reveal>
+          <img class="collection-img" src="assets/web utilities/his-library.jpg" alt="Outerwear Collection" onerror="this.style.background='var(--dark)'">
+          <div class="collection-overlay"></div>
+          <div class="collection-info">
+            <span class="collection-category">Outerwear</span>
+            <h3 class="collection-name">Outerwear Philosophy</h3>
+            <span class="collection-link">Explore <span>→</span></span>
+          </div>
+        </a>
+        <!-- Tops -->
+        <a href="pages/catalog.html?section=tops" class="collection-card" data-reveal style="transition-delay:0.1s">
+          <img class="collection-img" src="assets/web utilities/her-library.jpg" alt="Tops Collection" onerror="this.style.background='var(--dark)'">
+          <div class="collection-overlay"></div>
+          <div class="collection-info">
+            <span class="collection-category">Tops</span>
+            <h3 class="collection-name">Tops Off</h3>
+            <span class="collection-link">Explore <span>→</span></span>
+          </div>
+        </a>
+        <!-- Footwear -->
+        <a href="pages/catalog.html?section=shoes" class="collection-card" data-reveal style="transition-delay:0.2s">
+          <img class="collection-img" src="assets/web utilities/his-shoes.jpg" alt="Footwear Collection" onerror="this.style.background='var(--dark)'">
+          <div class="collection-overlay"></div>
+          <div class="collection-info">
+            <span class="collection-category">Footwear</span>
+            <h3 class="collection-name">Footwear Philosophy</h3>
+            <span class="collection-link">Explore <span>→</span></span>
+          </div>
+        </a>
+        <!-- Bottoms -->
+        <a href="pages/catalog.html?section=bottoms" class="collection-card" data-reveal style="transition-delay:0.25s">
+          <img class="collection-img" src="assets/products/women/bottoms/skirts/EmbroideredBeltedSkirt_ModelFront.jpg" alt="Bottoms Collection" onerror="this.style.background='var(--dark)'">
+          <div class="collection-overlay"></div>
+          <div class="collection-info">
+            <span class="collection-category">Bottoms</span>
+            <h3 class="collection-name">Bottoms Up</h3>
+            <span class="collection-link">Explore <span>→</span></span>
+          </div>
+        </a>
+        <!-- Bags -->
+        <a href="pages/catalog.html?section=bags" class="collection-card" data-reveal style="transition-delay:0.3s">
+          <img class="collection-img" src="assets/products/bags/klasiko/GreyBlueMiniKlasiko_WithModel.jpg" alt="Bags Collection" onerror="this.style.background='var(--dark)'">
+          <div class="collection-overlay"></div>
+          <div class="collection-info">
+            <span class="collection-category">Leather Goods</span>
+            <h3 class="collection-name">Hand Carries</h3>
+            <span class="collection-link">Explore <span>→</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- EDITORIAL BANNER -->
+    <section class="editorial-section">
+      <video class="editorial-video" autoplay muted loop playsinline>
+        <source src="assets\web utilities\hero3.mp4" type="video/mp4">
+      </video>
+      <div class="editorial-overlay"></div>
+      <div class="editorial-content" data-reveal>
+        <p class="editorial-quote">"We do not dress the body. We sculpt the presence of those who wear us."</p>
+        <span class="editorial-attr">— Casa Orense, Manila</span>
+      </div>
+    </section>
+
+    <!-- PRODUCTS (featured — home page) -->
+    <section class="products-section" id="productsSection">
+      <div class="section-header" data-reveal>
+        <div>
+          <span class="section-label">Featured Pieces</span>
+          <h2 class="section-title">Selected <em>Works</em></h2>
+        </div>
+        <a href="pages/catalog.html" class="btn-ghost">Full Catalog <span class="arrow">→</span></a>
+      </div>
+
+      <div class="search-bar-wrap" data-reveal>
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search by name or category…">
+        <span class="search-icon">⊕</span>
+      </div>
+
+      <div class="products-filters" data-reveal>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="mens">Menswear</button>
+        <button class="filter-btn" data-filter="womens">Womenswear</button>
+        <button class="filter-btn" data-filter="Footwear">Footwear</button>
+        <button class="filter-btn" data-filter="Bags">Bags</button>
+        <button class="filter-btn" data-filter="Outerwear">Outerwear</button>
+      </div>
+
+      <div class="products-toolbar" data-reveal>
+        <span class="products-count" id="productsCount">8 Pieces</span>
+        <select class="sort-select" id="sortSelect">
+          <option value="default">Sort: Default</option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+          <option value="alpha">Name: A–Z</option>
+        </select>
+      </div>
+
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section style="padding:120px 60px;background:var(--off-black);display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center">
+      <div data-reveal>
+        <span class="section-label">About the House</span>
+        <h2 class="section-title" style="margin-bottom:32px">Crafted in the <em>Philippines</em>, for the world.</h2>
+        <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--warm-grey);line-height:2.2;margin-bottom:24px">Casa Orense is a Philippine-based high fashion brand inspired by the timeless elegance of European fashion. Built on the idea of sophistication, craftsmanship, and modern luxury, Casa Orense blends classic aesthetics with contemporary Filipino creativity.</p>
+        <p style="font-family:var(--font-body);font-size:0.72rem;font-weight:300;color:var(--warm-grey);line-height:2.2;margin-bottom:40px">Each piece is conceived at our Manila atelier and realized by the hands of the country's finest artisans — a declaration that Filipino luxury needs no apology, no footnote.</p>
+        <a href="#" class="btn-ghost" data-open-appt>Book a Private Visit <span class="arrow">→</span></a>
+      </div>
+      <div data-reveal style="transition-delay:0.2s">
+        <div style="position:relative;overflow:hidden">
+          <img src="assets/web utilities/about.jpg" alt="Casa Orense Atelier" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block" onerror="this.style.background='var(--dark)'">
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:32px;background:linear-gradient(0deg,rgba(10,10,8,0.9),transparent)">
+            <span style="font-family:var(--font-body);font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold)">Manila, Est. 2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATIONS -->
+    <section class="locations-section" id="locationsSection">
+      <div class="locations-inner">
+        <div data-reveal>
+          <div class="appt-notice">
+            <span class="appt-notice-icon">◈</span>
+            <p class="appt-notice-text">Casa Orense boutiques operate exclusively by appointment. Walk-in visits are not permitted. Please book your visit below.</p>
+          </div>
+          <div class="section-header">
+            <div>
+              <span class="section-label">Exclusive Boutiques</span>
+              <h2 class="section-title">Our <em>Stores</em></h2>
+            </div>
+            <button class="btn-secondary" data-open-appt>Book an Appointment</button>
+          </div>
+        </div>
+
+        <div class="locations-grid">
+          <div class="location-card" data-reveal>
+            <span class="location-num">01</span>
+            <h3 class="location-name">Rockwell</h3>
+            <span class="location-district">Makati City</span>
+            <p class="location-detail">The Power Plant Mall<br>Rockwell Center, Makati</p>
+            <div class="location-divider"></div>
+            <p class="location-detail">Mon–Sat: 10:00–20:00</p>
+            <p class="location-detail">Sunday: 11:00–19:00</p>
+            <p class="location-detail">+63 2 8888 1001</p>
+            <div class="location-divider"></div>
+            <button class="location-appt-btn" data-open-appt>Book Appointment <span>→</span></button>
+          </div>
+          <div class="location-card" data-reveal style="transition-delay:0.15s">
+            <span class="location-num">02</span>
+            <h3 class="location-name">Greenbelt</h3>
+            <span class="location-district">Ayala, Makati</span>
+            <p class="location-detail">Greenbelt 5<br>Ayala Center, Makati</p>
+            <div class="location-divider"></div>
+            <p class="location-detail">Mon–Sat: 10:00–21:00</p>
+            <p class="location-detail">Sunday: 11:00–20:00</p>
+            <p class="location-detail">+63 2 8888 1002</p>
+            <div class="location-divider"></div>
+            <button class="location-appt-btn" data-open-appt>Book Appointment <span>→</span></button>
+          </div>
+          <div class="location-card" data-reveal style="transition-delay:0.3s">
+            <span class="location-num">03</span>
+            <h3 class="location-name">BGC</h3>
+            <span class="location-district">Bonifacio Global City, Taguig</span>
+            <p class="location-detail">Bonifacio High Street Central<br>BGC, Taguig City</p>
+            <div class="location-divider"></div>
+            <p class="location-detail">Mon–Sat: 10:00–21:00</p>
+            <p class="location-detail">Sunday: 11:00–20:00</p>
+            <p class="location-detail">+63 2 8888 1003</p>
+            <div class="location-divider"></div>
+            <button class="location-appt-btn" data-open-appt>Book Appointment <span>→</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end mainContent -->
+
+  <!-- ACCOUNT SECTION -->
+  <section class="account-section" id="accountSection" style="display:none">
+    <div style="max-width:1100px;margin:0 auto">
+      <button id="backFromAccount" class="btn-ghost" style="margin-bottom:48px">← Back to Boutique</button>
+      <div style="margin-bottom:48px">
+        <span class="section-label">Member Portal</span>
+        <h1 class="section-title">My <em>Account</em></h1>
+      </div>
+      <div class="account-tabs">
+        <button class="account-tab active" data-tab="profile">Profile</button>
+        <button class="account-tab"        data-tab="reservations">Reservations</button>
+        <button class="account-tab"        data-tab="appointments">Appointments</button>
+      </div>
+      <div class="account-tab-content active" id="tabProfile"><div id="accountProfile"></div></div>
+      <div class="account-tab-content"        id="tabReservations"></div>
+      <div class="account-tab-content"        id="tabAppointments"></div>
+    </div>
+  </section>
+
+  <!-- PRODUCT DETAIL -->
+  <section class="product-detail-section" id="productDetailSection"></section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Casa Orense</div>
+        <span class="footer-brand-motto">Redefining Filipino Fashion</span>
+        <p class="footer-brand-desc">A Philippine-based high fashion house inspired by European elegance. Sophistication, craftsmanship, and modern luxury — made in Manila, for the world.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/oh_juanpaolo/"  target="_blank" rel="noopener" class="footer-social-link">IG</a>
+          <a href="https://www.facebook.com/JP_Orense"   target="_blank" rel="noopener" class="footer-social-link">FB</a>
+          <a href="https://x.com"          target="_blank" rel="noopener" class="footer-social-link">𝕏</a>
+          <a href="https://ph.pinterest.com/pin/1045749975991457983/"  target="_blank" rel="noopener" class="footer-social-link">PT</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Collections</div>
+        <ul class="footer-links">
+          <li><a href="pages/catalog.html?section=tops">Menswear</a></li>
+          <li><a href="pages/catalog.html?section=tops">Womenswear</a></li>
+          <li><a href="pages/catalog.html?section=shoes">Footwear</a></li>
+          <li><a href="pages/catalog.html?section=bags">Leather Goods</a></li>
+          <li><a href="pages/catalog.html?section=outerwear">Evening Wear</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Our Stores</div>
+        <ul class="footer-links">
+          <li><a href="#locationsSection" data-section="locationsSection">Rockwell, Makati</a></li>
+          <li><a href="#locationsSection" data-section="locationsSection">Greenbelt, Makati</a></li>
+          <li><a href="#locationsSection" data-section="locationsSection">BGC, Taguig</a></li>
+          <li><a href="#" data-open-appt>Book Appointment</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Services</div>
+        <ul class="footer-links">
+          <li><a href="#" data-open-appt>Reservation Policy</a></li>
+          <li><a href="#" data-open-appt>Alteration Services</a></li>
+          <li><a href="pages/catalog.html">Size Guide</a></li>
+          <li><a href="pages/catalog.html">Care Instructions</a></li>
+          <li><a href="#" data-open-appt>Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Casa Orense. All Rights Reserved. Makati City, Philippines.</span>
+      <span class="footer-copy">By Appointment Only</span>
+    </div>
+  </footer>
+
+  <!-- ══ LOGIN / REGISTER MODAL ══ -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-eyebrow">Members Only</span>
+        <h2 class="modal-title">Welcome Back</h2>
+        <button class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="loginForm">
+          <button class="google-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.703-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Continue with Google
+          </button>
+          <div class="form-divider"><span class="form-divider-text">or</span></div>
+          <form id="loginFormEl" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">Email Address</label>
+              <input type="email" class="form-input" id="loginEmail" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loginPass">Password</label>
+              <input type="password" class="form-input" id="loginPass" name="password" placeholder="••••••••" required>
+              <div class="form-error" id="loginError"></div>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px">Sign In</button>
+          </form>
+          <p class="form-switch-text" style="margin-top:24px">New to Casa Orense? <button id="showRegister">Create an account</button></p>
+          <p class="form-switch-text" style="margin-top:8px;font-size:0.5rem;color:var(--ash)">Default admin: admin@casaorense.com / CasaOrense2025</p>
+        </div>
+
+        <div id="registerForm" style="display:none">
+          <button class="google-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.703-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            Register with Google
+          </button>
+          <div class="form-divider"><span class="form-divider-text">or register manually</span></div>
+          <form id="registerFormEl" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" name="lastName" placeholder="de la Cruz" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" name="firstName" placeholder="Maria" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" name="email" placeholder="your@email.com" required>
+              <div class="form-error" id="emailError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-input" name="password" placeholder="••••••••" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" name="phone" placeholder="+63 9XX XXX XXXX">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Gender</label>
+                <select class="form-select" name="gender">
+                  <option value="">Select</option>
+                  <option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Birthday</label>
+                <input type="date" class="form-input" name="birthday" required>
+                <div class="form-error" id="ageError"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Location</label>
+                <select class="form-select" name="location">
+                  <option value="">Select Province / City</option>
+                  <option>Metro Manila</option><option>Cebu</option><option>Davao</option>
+                  <option>Iloilo</option><option>Pampanga</option><option>Batangas</option>
+                  <option>Laguna</option><option>Quezon City</option><option>Rizal</option>
+                  <option>Bulacan</option><option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="margin-bottom:16px">Body Measurements (cm) <span style="color:var(--ash)">— Optional</span></label>
+              <div class="measurement-grid">
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Chest</label>
+                  <input type="number" class="form-input" name="chest" placeholder="90">
+                  <span class="measurement-unit">cm</span>
+                </div>
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Waist</label>
+                  <input type="number" class="form-input" name="waist" placeholder="75">
+                  <span class="measurement-unit">cm</span>
+                </div>
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Hips</label>
+                  <input type="number" class="form-input" name="hips" placeholder="95">
+                  <span class="measurement-unit">cm</span>
+                </div>
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Inseam</label>
+                  <input type="number" class="form-input" name="inseam" placeholder="80">
+                  <span class="measurement-unit">cm</span>
+                </div>
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Shoulder</label>
+                  <input type="number" class="form-input" name="shoulder" placeholder="44">
+                  <span class="measurement-unit">cm</span>
+                </div>
+                <div class="measurement-input-wrap form-group">
+                  <label class="form-label" style="font-size:0.5rem">Height</label>
+                  <input type="number" class="form-input" name="height" placeholder="170">
+                  <span class="measurement-unit">cm</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px">Create Account</button>
+          </form>
+          <p class="form-switch-text" style="margin-top:20px">Already a member? <button id="showLogin">Sign in</button></p>
+          <p style="font-family:var(--font-body);font-size:0.5rem;font-weight:300;color:var(--ash);letter-spacing:0.1em;text-align:center;margin-top:12px;line-height:1.8">You must be 21 years of age or older to register.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APPOINTMENT MODAL ══ -->
+  <div class="modal-overlay" id="appointmentModal">
+    <div class="modal" style="max-width:580px">
+      <div class="modal-header">
+        <span class="modal-eyebrow">By Appointment Only</span>
+        <h2 class="modal-title">Book a Visit</h2>
+        <button class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="appt-progress">
+          <div class="appt-progress-bar done"></div>
+          <div class="appt-progress-bar"></div>
+          <div class="appt-progress-bar"></div>
+        </div>
+        <!-- Step 1 -->
+        <div class="appt-step active" data-step="1">
+          <div class="form-group">
+            <label class="form-label">Registrant Name</label>
+            <input type="text" class="form-input" id="apptName" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="margin-bottom:16px">Type of Visit</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <button class="appt-type-btn filter-btn" data-type="Shopping">Shopping</button>
+              <button class="appt-type-btn filter-btn" data-type="Store Pickup">Store Pickup</button>
+              <button class="appt-type-btn filter-btn" data-type="Altering">Altering</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preferred Store</label>
+              <select class="form-select" id="apptStore">
+                <option value="">— Select —</option>
+                <option value="rockwell">Rockwell, Makati</option>
+                <option value="greenbelt">Greenbelt, Makati</option>
+                <option value="bgc">BGC, Taguig</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Number of Visitors</label>
+              <select class="form-select" id="apptNumVisitors">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4 (Maximum)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preferred Date</label>
+              <input type="date" class="form-input" id="apptDate">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Time</label>
+              <select class="form-select" id="apptTime">
+                <option value="">— Select Time —</option>
+                <option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+                <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="child-warning">
+            <span class="child-warning-icon">⚠</span>
+            <p class="child-warning-text"><strong style="color:#e89090;font-weight:500">Children are strictly not permitted</strong> inside Casa Orense boutiques. All visitors must be 18 years of age or above.</p>
+          </div>
+          <button class="btn-primary" style="width:100%;justify-content:center;margin-top:20px" id="apptNext1">Continue →</button>
+        </div>
+        <!-- Step 2 -->
+        <div class="appt-step" data-step="2">
+          <p style="font-family:var(--font-body);font-size:0.65rem;font-weight:300;color:var(--warm-grey);letter-spacing:0.1em;margin-bottom:24px;line-height:1.8">Please provide the full names of all visitors accompanying you.</p>
+          <div class="visitors-list" id="visitorNamesWrap"></div>
+          <div class="child-warning" style="margin-top:20px">
+            <span class="child-warning-icon">⚠</span>
+            <p class="child-warning-text"><strong style="color:#e89090;font-weight:500">Children are strictly not permitted</strong> inside Casa Orense boutiques.</p>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:28px">
+            <button class="btn-secondary" style="flex:1;justify-content:center" id="apptBack2">← Back</button>
+            <button class="btn-primary"   style="flex:2;justify-content:center" id="apptNext2">Review Booking →</button>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="appt-step" data-step="3">
+          <p style="font-family:var(--font-body);font-size:0.6rem;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px">Confirm Your Appointment</p>
+          <div id="apptConfirmDetails"></div>
+          <p style="font-family:var(--font-body);font-size:0.55rem;font-weight:300;color:var(--warm-grey);letter-spacing:0.1em;margin-top:20px;line-height:1.8">A confirmation will be noted in your account. Please arrive on time. Late arrivals may forfeit their slot.</p>
+          <div style="display:flex;gap:12px;margin-top:28px">
+            <button class="btn-secondary" style="flex:1;justify-content:center" id="apptBack3">← Back</button>
+            <button class="btn-primary"   style="flex:2;justify-content:center" id="apptSubmitBtn">Confirm Appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RESERVE APPOINTMENT CHOICE MODAL ══ -->
+  <!-- Shown when user has existing appointments and wants to confirm reservation -->
+  <div class="modal-overlay" id="reserveApptModal">
+    <div class="reserve-appt-modal">
+      <div class="modal-header">
+        <span class="modal-eyebrow">Complete Your Reservation</span>
+        <h2 class="modal-title">In-Store Appointment</h2>
+        <button class="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-family:var(--font-body);font-size:0.65rem;font-weight:300;color:var(--warm-grey);letter-spacing:0.1em;margin-bottom:28px;line-height:1.9">Your reservation requires an in-store appointment to be completed. You have existing appointments on record. Would you like to use one, or book a new appointment?</p>
+        <div id="existingApptList"></div>
+        <!-- New appointment option -->
+        <div class="existing-appt-choice" onclick="selectNewAppt(this)" style="margin-top:8px">
+          <div>
+            <div class="existing-appt-label">Book a New Appointment</div>
+            <div class="existing-appt-detail">Schedule a fresh in-store visit</div>
+          </div>
+          <div class="existing-appt-check">+</div>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;margin-top:28px" id="reserveApptConfirmBtn">Confirm Selection</button>
+        <p style="font-family:var(--font-body);font-size:0.5rem;font-weight:300;color:var(--ash);letter-spacing:0.1em;text-align:center;margin-top:12px;line-height:1.8">Your reserved items will be held for 48 hours after confirmation.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
